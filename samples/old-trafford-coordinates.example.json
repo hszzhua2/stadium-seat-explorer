@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "venueId": "old-trafford",
+  "seats": [
+    {
+      "sectionId": "OT-N2-04",
+      "row": 1,
+      "seat": 1,
+      "x": -64,
+      "y": 22,
+      "z": -12.484
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e31b23"><meta name="description" content="安菲尔德四看台选位与三维观赛视野，本机交互原型。">
+  <title>ANFIELD · 座位视野探索</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23e31b23'/%3E%3Cpath d='M14 45 27 16h10l13 29H39l-3-8H27l-3 8zm16-16h4l-2-6z' fill='white'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./src/style.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three/build/three.module.js","three/addons/":"./vendor/three/addons/"}}</script>
+  <script type="module" src="./src/app.js"></script>
+</head>
+<body>
+  <header class="site-header">
+    <a href="./" class="brand" aria-label="球场视野首页"><span class="brand-mark" id="brand-letter">A</span><span><span id="brand-title">ANFIELD</span><span class="brand-sub">VIEW EXPLORER</span></span></a>
+    <nav><span class="active-nav">座位视野</span><button id="sources-nav">模型与资料 <span>↗</span></button></nav>
+    <span class="local-badge"><i></i> 浏览器体验</span>
+  </header>
+  <section class="intro"><div class="intro-inner"><div><p class="eyebrow" id="venue-eyebrow">THIS IS ANFIELD. THIS IS YOUR VIEW.</p><h1 id="venue-heading">找到你的安菲尔德视角。</h1><p>从看台到场边，选一个位置，走进比赛。</p></div><div class="intro-meta"><span>4 <small>个看台</small></span><span><b id="view-type-count">5</b> <small>类视点</small></span><span>360° <small>自由环视</small></span></div></div></section>
+  <main>
+    <div class="venue-switcher"><label for="venue-select">选择球场</label><select id="venue-select" aria-label="选择球场"><option value="anfield">安菲尔德 · Anfield</option><option value="camp-nou">诺坎普 · Camp Nou</option><option value="bernabeu">伯纳乌 · Santiago Bernabéu</option><option value="allianz-arena">安联球场 · Allianz Arena</option><option value="old-trafford">老特拉福德 · Old Trafford</option></select><div><strong id="venue-edition">扩建后安菲尔德</strong><span id="venue-model-note">公开分区 · 空间估算</span></div></div>
+    <section class="explorer">
+      <aside class="selection-panel">
+        <div class="panel-heading"><div><span class="step">01</span><h2>选择你的位置</h2></div><span class="estimated-tag">估算布局</span></div>
+        <div class="type-filters" id="type-filters" aria-label="视点类型">
+          <button data-type="all" class="active">全部</button><button data-type="seat">座席</button><button data-type="standing">站席</button><button data-type="suite">包厢</button><button data-type="dugout">教练席</button><button data-type="accessible">无障碍</button>
+        </div>
+        <div class="map-tabs"><button id="map-tab" class="active">球场分区</button><button id="seats-tab">逐排选位</button><span id="map-caption">点击分区切换视点</span></div>
+        <div class="map-wrap" id="map-wrap"><svg id="stadium-map" viewBox="0 0 480 490" role="img" aria-label="球场分区平面选位图"></svg><div class="map-key"><span><i class="selected-key"></i>当前选择</span><span id="map-orientation">视图上方为安菲尔德路端</span></div></div>
+        <div id="seat-grid-wrap" class="hidden"><div class="pitch-direction">↑ 朝向球场 · 1 排在最前方</div><div id="seat-grid" class="seat-grid" role="group" aria-label="示意排座网格"></div><p class="grid-note">分区内局部排、座编号，仅用于此原型。</p></div>
+        <div class="selection-fields"><label>看台<select id="stand-select"></select></label><label>分区 / 视点<select id="section-select"></select></label></div>
+        <div class="row-fields"><label>示意排<input type="number" id="row-input" min="1" value="12"></label><label id="seat-label">示意座 / 位置<input type="number" id="seat-input" min="1" value="10"></label><button id="enter-seat" class="enter-button">进入视野 <span>→</span></button></div>
+        <div class="selection-note"><span class="note-icon">i</span><p id="selection-note">排座坐标为几何估算，可导入实测坐标进行替换。</p></div>
+      </aside>
+      <section class="view-panel">
+        <div class="view-topbar"><div><span class="live-dot"></span><span id="view-title">Main Stand · L5</span><span id="view-type">普通座席</span></div><div class="view-tabs"><button id="seat-mode" class="active">座位视角</button><button id="overview-mode">球场鸟瞰</button></div></div>
+        <div class="overview-source-bar"><div><span>鸟瞰数据</span><button id="local-overview" class="active">建筑模型</button><button id="google-overview">Google 真实 3D</button></div><label class="cutaway-control"><input id="cutaway-toggle" type="checkbox">剖开屋顶</label><button id="map-settings">地图配置</button></div>
+        <div id="exterior-controls" class="exterior-controls"><label for="exterior-focus">外围入口近览</label><select id="exterior-focus"><option value="overview">球场全景</option><option value="shankly">Shankly Gates · 香克利大门</option><option value="paisley">Paisley Gateway · 派斯利入口</option><option value="main-entry">Main Stand · 主看台入口</option><option value="kenny-entry">Kenny Dalglish · 肯尼看台入口</option><option value="kop-entry">The Kop · Kop 看台入口</option><option value="road-entry">Anfield Road · 安菲尔德路入口</option></select><span>围栏与入口位置为近似复原</span></div>
+        <div class="viewport" id="viewport">
+          <div id="scene" aria-label="三维观赛视野"></div>
+          <div id="google-scene" class="hidden" aria-label="Google 安菲尔德三维地图"></div>
+          <div id="google-config" class="google-config hidden"><div class="google-config-card"><span class="eyebrow">GOOGLE PHOTOREALISTIC 3D</span><h2>使用真实地图的球场外观</h2><p>输入你的 Google Maps Platform 浏览器 API key。可使用官方 Demo Key 做有限额度原型；正式项目需启用 Maps JavaScript API 和计费。点击加载会向 Google 请求三维影像，费用或限制按你的密钥类型计算。</p><label>API key<input id="google-key" type="password" autocomplete="off" spellcheck="false" placeholder="仅在当前会话使用"></label><div><button id="load-google" class="enter-button">加载 Google 三维地图</button><button id="cancel-google">返回建筑模型</button></div><p id="google-status" role="status">未配置密钥，不会请求 Google API。地图影像与当前球场版本可能存在时间差。</p><a id="earth-reference" href="https://earth.google.com/web/search/Anfield+Stadium" target="_blank" rel="noopener">无需 API key，打开 Google Earth 参考 ↗</a><a class="demo-key-link" href="https://developers.google.com/maps/documentation/javascript/demo-key" target="_blank" rel="noopener">获取官方 Demo Key 的说明 ↗</a></div></div>
+          <div id="loading" class="loading"><span></span><strong>正在走进安菲尔德</strong><small>构建球场与看台…</small></div>
+          <div class="view-label"><span id="model-label">程序重建 · 估算模型</span><span id="lighting-label">DAYLIGHT</span></div>
+          <div class="view-tools"><button id="reset-view" title="视线回到场地中央" aria-label="视线回中"><svg viewBox="0 0 24 24"><path d="M4 10a8 8 0 1 1 1 8M4 4v6h6"/></svg></button><button id="capture-view" title="保存当前视野 PNG" aria-label="保存视野截图"><svg viewBox="0 0 24 24"><path d="M8 5h8l2 3h3v12H3V8h3z"/><circle cx="12" cy="13" r="4"/></svg></button><button id="fullscreen" title="全屏视野" aria-label="全屏视野"><svg viewBox="0 0 24 24"><path d="M3 9V3h6m6 0h6v6m0 6v6h-6m-6 0H3v-6"/></svg></button></div>
+          <div class="view-bottom-overlay"><div><span class="tiny-label">YOU ARE HERE</span><strong id="overlay-seat">L5 · 排 12 · 座 10</strong></div><span id="interaction-hint">拖动环视 · 滚轮调整视野</span></div>
+        </div>
+        <div class="view-controls"><div class="segmented" aria-label="球场光照"><button id="day-mode" class="active">☀ 日间</button><button id="night-mode">☾ 夜场</button></div><label class="crowd-control"><input type="checkbox" id="crowd-toggle"><span class="switch"></span>观众氛围</label><label class="fov-control">视角 <input type="range" id="fov" min="35" max="100" value="65"><output id="fov-value">65°</output></label><button class="share-button" id="share-position">复制位置链接 ↗</button></div>
+        <div id="google-info" class="google-info hidden">Google 三维地图 · 位置标记仍为估算 · 地理定位 © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap contributors</a>。座位视角使用本地模型。</div>
+        <div class="position-summary"><div><span class="tiny-label">视点类型</span><strong id="summary-type">普通座席</strong><small id="summary-tier">主看台 · 下层</small></div><div><span class="tiny-label">眼睛空间坐标 · m</span><strong id="summary-coordinate" class="coordinate"></strong><small id="coordinate-status">程序估算 · 球场中心为原点</small></div><div class="posture-field"><label class="tiny-label" for="posture">观看姿态</label><select id="posture"><option value="auto">自动匹配位置</option><option value="seated">坐姿 · 眼高 1.15 m</option><option value="standing">站姿 · 眼高 1.68 m</option></select><small id="eye-height-label"></small></div></div>
+      </section>
+    </section>
+    <section class="details-section"><div class="details-tabs" role="tablist"><button id="about-tab" data-panel="about" class="active" role="tab">位置说明</button><button id="source-tab" data-panel="sources" role="tab">模型与资料</button><button id="import-tab" data-panel="import" role="tab">导入模型与坐标</button></div>
+      <div id="about-panel" class="detail-panel"><div><span class="eyebrow">BEFORE YOU PICK</span><h2 id="about-heading">在主看台，感受比赛的全貌。</h2><p id="about-description"></p></div><div class="accuracy-card"><span class="small-overline">数据精度</span><strong id="accuracy-heading">分区有依据，空间为估算</strong><p id="accuracy-description">四看台分区依据公开座位图重建。排数、座距、看台高度、包厢与教练席位置为示意参数；此视野不能用于判断真实座位的遮挡。</p><a id="venue-view-reference" href="https://map.3ddigitalvenue.com/liverpool" target="_blank" rel="noopener">打开外部 3D 座位视野 ↗</a></div></div>
+      <div id="sources-panel" class="detail-panel hidden"><div><span class="eyebrow">RESEARCH & REFERENCES</span><h2>找到的球场模型与座位资料</h2><p id="sources-intro">本机三维场景是按公开分区资料建立的程序模型。以下模型候选未内置：需要取得可用文件，并确认作者许可后才能替换。公开查看入口不等于模型下载授权。</p><div id="source-list" class="source-list"></div></div><div class="accuracy-card"><span class="small-overline">已核实的范围</span><strong id="source-coverage-title">安菲尔德的四个看台</strong><p id="source-coverage-description">Main 三层、Kenny 两层、Kop 连续单层、Anfield Road 两层；AM / AU 对应扩建上层的不同排带。球场按 101 × 68 m 建立。</p><p id="source-special-description">全 Kop 配有安全护栏座席；站席仍与单个位置对应。包厢视点和教练席内部编号采用示意编号。</p><small>资料核对：2026-10-04</small></div></div>
+      <div id="import-panel" class="detail-panel hidden"><div><span class="eyebrow">MAKE IT MORE PRECISE</span><h2>用你的数据校准视野。</h2><p id="import-coordinate-description">导入在本机内存中处理。模型与坐标需使用同一坐标系：米、Y 轴向上、球场中心为原点，X 为球场宽向、Z 为长向；主看台位于 −X，Kop 位于 +Z。</p><div class="import-actions"><label class="file-button">导入 GLB 模型<input id="model-file" type="file" accept=".glb"></label><label class="file-button">导入座位 JSON<input id="coordinate-file" type="file" accept=".json,application/json"></label><button id="reset-data">恢复估算模型与坐标</button></div><p class="import-status" id="import-status" aria-live="polite">GLB 需自含纹理。座位坐标 y 为地面/基座高度，程序另加眼高。</p><a id="coordinate-sample" href="./samples/seat-coordinates.example.json" download="coordinates.json">下载 JSON 格式示例 ↓</a></div><div class="schema-card"><span class="small-overline">JSON FORMAT · 局部分区排座</span><pre id="coordinate-schema">{
+  "version": 1,
+  "seats": [{
+    "sectionId": "L5",
+    "row": 12, "seat": 10,
+    "x": -47.58,
+    "y": 6.73, "z": -5.8
+  }]
+}</pre><p>部分导入只替换对应视点。导入的坐标属于所选文件，精度由该文件决定；真实模型不会自动产生逐座数据。</p></div></div>
+    </section>
+    <footer><span id="footer-venue">ANFIELD VIEW EXPLORER</span><p>独立可视化原型 · 分区与几何估算 · 不提供票务库存</p><span id="footer-motto">YOU’LL NEVER WALK ALONE.</span></footer>
+  </main>
+  <div id="toast" role="status" aria-live="polite"></div>
+</body></html>

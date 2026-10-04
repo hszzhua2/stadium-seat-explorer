@@ -1,0 +1,11 @@
+{
+  "name": "anfield-seat-explorer",
+  "version": "1.7.1",
+  "private": true,
+  "license": "MIT",
+  "repository": { "type": "git", "url": "https://github.com/hszzhua2/stadium-seat-explorer.git" },
+  "homepage": "https://hszzhua2.github.io/stadium-seat-explorer/",
+  "type": "module",
+  "scripts": {"start": "node server.mjs --open", "test": "node --test", "build": "node scripts/build-pages.mjs"},
+  "description": "Local Anfield, classic Camp Nou, renovated Bernabeu, Allianz Arena and Old Trafford seat views with independent stadium reconstructions"
+}

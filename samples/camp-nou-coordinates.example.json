@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "venueId": "camp-nou",
+  "seats": [
+    {
+      "sectionId": "TR2-04",
+      "row": 1,
+      "seat": 1,
+      "x": -68.762,
+      "y": 16,
+      "z": 17.145
+    }
+  ]
+}

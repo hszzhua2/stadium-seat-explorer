@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "venueId": "bernabeu",
+  "seats": [
+    {
+      "sectionId": "O2-04",
+      "row": 1,
+      "seat": 1,
+      "x": -64.978,
+      "y": 18,
+      "z": 16.43
+    }
+  ]
+}

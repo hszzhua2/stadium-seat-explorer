@@ -1,0 +1,7 @@
+{
+  "version": 1,
+  "seats": [
+    { "sectionId": "L5", "row": 1, "seat": 1, "x": -39, "y": 2, "z": -10.2125 },
+    { "sectionId": "DUG-H", "row": 1, "seat": 1, "x": -36.8, "y": 0.05, "z": 3.55 }
+  ]
+}

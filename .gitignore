@@ -1,0 +1,27 @@
+node_modules/
+dist/
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+
+# Publish only the vendored Three.js modules actually used by this app.
+/vendor/three/*
+!/vendor/three/LICENSE
+!/vendor/three/build/
+/vendor/three/build/*
+!/vendor/three/build/three.core.js
+!/vendor/three/build/three.module.js
+!/vendor/three/addons/
+/vendor/three/addons/*
+!/vendor/three/addons/controls/
+/vendor/three/addons/controls/*
+!/vendor/three/addons/controls/OrbitControls.js
+!/vendor/three/addons/loaders/
+/vendor/three/addons/loaders/*
+!/vendor/three/addons/loaders/GLTFLoader.js
+!/vendor/three/addons/utils/
+/vendor/three/addons/utils/*
+!/vendor/three/addons/utils/BufferGeometryUtils.js
